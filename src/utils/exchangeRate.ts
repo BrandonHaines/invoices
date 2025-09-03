@@ -55,7 +55,7 @@ export class ExchangeRateService {
       
       if (!apiKey) {
         console.warn('No exchange rate API key configured, using fallback rate');
-        return 0.85; // Fallback rate with fee included
+        return 0.86; // Fallback rate with 0.6% fee added
       }
 
       // Using exchangerate-api.com
@@ -65,8 +65,8 @@ export class ExchangeRateService {
       );
 
       if (response.data && response.data.conversion_rate) {
-        // Add 0.6% fee in favor (multiply by 0.994 to reduce EUR amount by 0.6%)
-        return response.data.conversion_rate * 0.994;
+        // Add 0.6% fee in favor (multiply by 1.006 to increase EUR amount by 0.6%)
+        return response.data.conversion_rate * 1.006;
       }
 
       throw new Error('Invalid API response');
@@ -113,7 +113,7 @@ export class ExchangeRateService {
       // Ultimate fallback
       console.warn('No cached rate available, using fallback rate');
       return {
-        rate: 0.85, // Fallback rate with fee included
+        rate: 0.86, // Fallback rate with 0.6% fee added
         cached: false,
         date: today
       };
