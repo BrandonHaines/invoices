@@ -45,8 +45,6 @@ export class InvoiceGenerator {
     doc.text(config.company.name, 50, 140);
     doc.text(config.company.address, 50, 155);
     doc.text(config.company.city, 50, 170);
-    doc.text(config.company.email, 50, 185);
-    doc.text(config.company.phone, 50, 200);
 
     // Client info (To)
     doc.fontSize(12).text('Bill To:', 300, 120);
@@ -54,7 +52,6 @@ export class InvoiceGenerator {
     doc.text(config.client.name, 300, 140);
     doc.text(config.client.address, 300, 155);
     doc.text(config.client.city, 300, 170);
-    doc.text(config.client.email, 300, 185);
 
     // Line
     doc.moveTo(50, 240).lineTo(550, 240).stroke();
