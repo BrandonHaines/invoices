@@ -85,7 +85,7 @@ export class ExchangeRateService {
                                 this.cache && 
                                 this.cache.date === today;
 
-    if (shouldUseTodayCache) {
+    if (shouldUseTodayCache && this.cache) {
       console.log('Using cached exchange rate from today (dev mode)');
       return {
         rate: this.cache.rate,

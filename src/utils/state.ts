@@ -9,7 +9,7 @@ interface State {
 }
 
 export class StateManager {
-  private state: State;
+  private state!: State;
 
   constructor() {
     this.ensureDataDirectory();

@@ -73,7 +73,6 @@ const scheduleInvoice = () => {
       console.error('Scheduled invoice generation failed:', error);
     }
   }, {
-    scheduled: true,
     timezone: process.env.TZ || 'America/New_York'
   });
 
@@ -92,7 +91,6 @@ const scheduleInvoice = () => {
       }
     }
   }, {
-    scheduled: true,
     timezone: process.env.TZ || 'America/New_York'
   });
 };
