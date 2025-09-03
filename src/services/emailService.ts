@@ -33,48 +33,12 @@ export class EmailService {
       subject: `Invoice #${invoiceData.invoiceNumber} - ${monthYear}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px;">
-          <h2>Invoice for ${monthYear}</h2>
+          <p>Dear Client,</p>
           
-          <p>Dear ${config.client.contact || 'Client'},</p>
+          <p>Please find attached the invoice for my monthly services.</p>
           
-          <p>Please find attached the invoice for our monthly services.</p>
-          
-          <table style="border-collapse: collapse; width: 100%; margin: 20px 0;">
-            <tr>
-              <td style="padding: 8px; border: 1px solid #ddd;"><strong>Invoice Number:</strong></td>
-              <td style="padding: 8px; border: 1px solid #ddd;">${invoiceData.invoiceNumber}</td>
-            </tr>
-            <tr>
-              <td style="padding: 8px; border: 1px solid #ddd;"><strong>Date:</strong></td>
-              <td style="padding: 8px; border: 1px solid #ddd;">${invoiceData.date.toLocaleDateString()}</td>
-            </tr>
-            <tr>
-              <td style="padding: 8px; border: 1px solid #ddd;"><strong>Amount (USD):</strong></td>
-              <td style="padding: 8px; border: 1px solid #ddd;">$${invoiceData.amountUSD.toFixed(2)}</td>
-            </tr>
-            <tr>
-              <td style="padding: 8px; border: 1px solid #ddd;"><strong>Amount (EUR):</strong></td>
-              <td style="padding: 8px; border: 1px solid #ddd;">€${invoiceData.amountEUR.toFixed(2)}</td>
-            </tr>
-            <tr>
-              <td style="padding: 8px; border: 1px solid #ddd;"><strong>Exchange Rate:</strong></td>
-              <td style="padding: 8px; border: 1px solid #ddd;">1 USD = ${invoiceData.exchangeRate.toFixed(4)} EUR</td>
-            </tr>
-          </table>
-          
-          <p><strong>Payment Terms:</strong> Net 30 days</p>
-          
-          <p>Please include the invoice number with your payment.</p>
-          
-          <p>Thank you for your continued business!</p>
-          
-          <hr style="margin: 30px 0;">
-          
-          <p style="color: #666; font-size: 12px;">
-            ${config.company.name}<br>
-            ${config.company.email}<br>
-            ${config.company.phone}
-          </p>
+          <p>Thank you and best regards,<br>
+          Varun</p>
         </div>
       `,
       attachments: [

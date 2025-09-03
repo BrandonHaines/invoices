@@ -104,11 +104,10 @@ export class InvoiceGenerator {
     // Total line
     doc.moveTo(50, 400).lineTo(550, 400).stroke();
 
-    // Total
+    // Total (EUR only)
     doc.fontSize(14).font('Helvetica-Bold');
     doc.text('TOTAL', 50, 420);
-    doc.text(`$${total.toFixed(2)}`, 350, 420);
-    doc.text(`€${totalEUR.toFixed(2)}`, 450, 420);
+    doc.text(`€${totalEUR.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, 450, 420);
 
     // Bank details section
     doc.fontSize(11).font('Helvetica-Bold').fillColor('black');
@@ -124,10 +123,9 @@ export class InvoiceGenerator {
     doc.text('Brussels, 1050', 50, 565);
     doc.text('Belgium', 50, 580);
     
-    // Payment terms
+    // Invoice number reminder
     doc.fontSize(10);
-    doc.text('Payment Terms: Net 30 days', 50, 610);
-    doc.text('Please include invoice number with payment', 50, 625);
+    doc.text(`Please include invoice number ${data.invoiceNumber} with payment`, 50, 610);
 
     // Footer
     doc.fontSize(8).fillColor('gray');
