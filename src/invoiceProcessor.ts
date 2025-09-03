@@ -2,7 +2,6 @@ import { StateManager } from './utils/state';
 import { ExchangeRateService } from './utils/exchangeRate';
 import { InvoiceGenerator, InvoiceData } from './services/invoiceGenerator';
 import { EmailService } from './services/emailService';
-import { TelegramService } from './services/telegramService';
 import { config } from './config';
 
 export class InvoiceProcessor {
@@ -10,14 +9,12 @@ export class InvoiceProcessor {
   private exchangeRateService: ExchangeRateService;
   private invoiceGenerator: InvoiceGenerator;
   private emailService: EmailService;
-  private telegramService: TelegramService;
 
   constructor() {
     this.stateManager = new StateManager();
     this.exchangeRateService = new ExchangeRateService();
     this.invoiceGenerator = new InvoiceGenerator();
     this.emailService = new EmailService();
-    this.telegramService = new TelegramService();
   }
 
   async processInvoice(): Promise<void> {
@@ -36,7 +33,7 @@ export class InvoiceProcessor {
       const amountUSD = config.invoice.amountUSD;
       const amountEUR = amountUSD * rateInfo.rate;
 
-      // Prepare invoice data
+      // Prepare invoice data - use current month for invoice
       const invoiceData: InvoiceData = {
         invoiceNumber,
         date: new Date(),
@@ -59,8 +56,6 @@ export class InvoiceProcessor {
         console.error('Failed to send invoice email:', error);
       }
 
-      // Send Telegram notification
-      await this.telegramService.sendNotification(invoiceData, emailSent);
 
       // Update state only if email was sent successfully
       if (emailSent) {
@@ -87,10 +82,6 @@ export class InvoiceProcessor {
     // Test email
     const emailOk = await this.emailService.testConnection();
     console.log(`Email connection: ${emailOk ? '✓' : '✗'}`);
-    
-    // Test Telegram
-    const telegramOk = await this.telegramService.sendTestMessage();
-    console.log(`Telegram connection: ${telegramOk ? '✓' : '✗'}`);
     
     // Test exchange rate
     try {

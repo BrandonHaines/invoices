@@ -60,30 +60,35 @@ app.post('/precache', express.json(), async (req, res) => {
 
 // Schedule monthly invoice generation
 const scheduleInvoice = () => {
-  // Schedule for the 1st of every month at 9 AM (configurable)
+  // Schedule for the last day of every month at 9 AM (configurable)
   const schedule = config.cron.schedule;
   
   console.log(`Scheduling invoice generation with cron: ${schedule}`);
   
   cron.schedule(schedule, async () => {
-    console.log('Running scheduled invoice generation...');
-    try {
-      await processor.processInvoice();
-    } catch (error) {
-      console.error('Scheduled invoice generation failed:', error);
+    // Only run on actual last day of month
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    if (tomorrow.getDate() === 1) {
+      console.log('Running scheduled invoice generation...');
+      try {
+        await processor.processInvoice();
+      } catch (error) {
+        console.error('Scheduled invoice generation failed:', error);
+      }
     }
   }, {
     timezone: process.env.TZ || 'America/New_York'
   });
 
-  // Schedule pre-caching for the last day of each month at 8 PM
-  cron.schedule('0 20 28-31 * *', async () => {
+  // Pre-cache exchange rate 1 hour before invoice generation
+  cron.schedule('0 8 28-31 * *', async () => {
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     
-    // Only run if tomorrow is the 1st
+    // Only run on actual last day of month
     if (tomorrow.getDate() === 1) {
-      console.log('Pre-caching exchange rate for tomorrow...');
+      console.log('Pre-caching exchange rate...');
       try {
         await processor.preCacheExchangeRate();
       } catch (error) {
