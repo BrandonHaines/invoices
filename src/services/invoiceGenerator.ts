@@ -54,8 +54,7 @@ export class InvoiceGenerator {
     doc.text(config.client.name, 300, 140);
     doc.text(config.client.address, 300, 155);
     doc.text(config.client.city, 300, 170);
-    doc.text(`Attn: ${config.client.contact}`, 300, 185);
-    doc.text(config.client.email, 300, 200);
+    doc.text(config.client.email, 300, 185);
 
     // Line
     doc.moveTo(50, 240).lineTo(550, 240).stroke();
