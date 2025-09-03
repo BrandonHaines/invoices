@@ -68,7 +68,7 @@ export class InvoiceGenerator {
     // Invoice item with description
     doc.fontSize(10);
     const monthYear = data.date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-    const description = config.invoice.description || 'Monthly Service';
+    const description = 'Consultancy as Operating Officer';
     doc.text(`Fee for ${monthYear} — ${description}`, 50, 300);
     doc.text(`$${data.amountUSD.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`, 350, 300);
     doc.text(`€${data.amountEUR.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, 450, 300);
