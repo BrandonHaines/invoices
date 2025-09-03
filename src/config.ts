@@ -6,7 +6,8 @@ export const config = {
     startNumber: parseInt(process.env.INVOICE_START_NUMBER || '1001'),
     amountUSD: parseFloat(process.env.INVOICE_AMOUNT_USD || '1000'),
     taxRate: parseFloat(process.env.INVOICE_TAX_RATE || '0'),
-    currencySymbol: process.env.INVOICE_CURRENCY_SYMBOL || '$'
+    currencySymbol: process.env.INVOICE_CURRENCY_SYMBOL || '$',
+    description: process.env.INVOICE_DESCRIPTION || 'Monthly Service'
   },
   company: {
     name: process.env.COMPANY_NAME || 'Your Company',

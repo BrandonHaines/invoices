@@ -69,11 +69,13 @@ export class InvoiceGenerator {
     // Line
     doc.moveTo(50, 280).lineTo(550, 280).stroke();
 
-    // Invoice item
+    // Invoice item with description
     doc.fontSize(10);
-    doc.text('Monthly Service Fee', 50, 300);
-    doc.text(`$${data.amountUSD.toFixed(2)}`, 350, 300);
-    doc.text(`€${data.amountEUR.toFixed(2)}`, 450, 300);
+    const monthYear = data.date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+    const description = config.invoice.description || 'Monthly Service';
+    doc.text(`Fee for ${monthYear} — ${description}`, 50, 300);
+    doc.text(`$${data.amountUSD.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`, 350, 300);
+    doc.text(`€${data.amountEUR.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, 450, 300);
 
     // Exchange rate info
     doc.fontSize(8);
@@ -108,10 +110,24 @@ export class InvoiceGenerator {
     doc.text(`$${total.toFixed(2)}`, 350, 420);
     doc.text(`€${totalEUR.toFixed(2)}`, 450, 420);
 
-    // Payment terms
+    // Bank details section
+    doc.fontSize(11).font('Helvetica-Bold').fillColor('black');
+    doc.text('Bank Details:', 50, 480);
+    
     doc.fontSize(10).font('Helvetica');
-    doc.text('Payment Terms: Net 30 days', 50, 480);
-    doc.text('Please include invoice number with payment', 50, 495);
+    doc.text('Account holder: Varun Gaur', 50, 500);
+    doc.text('BIC: TRWIBEB1XXX', 50, 515);
+    doc.text('IBAN: BE90 9671 0838 4732', 50, 530);
+    
+    doc.fontSize(9);
+    doc.text('Rue du Trone 100, 3rd floor', 50, 550);
+    doc.text('Brussels, 1050', 50, 565);
+    doc.text('Belgium', 50, 580);
+    
+    // Payment terms
+    doc.fontSize(10);
+    doc.text('Payment Terms: Net 30 days', 50, 610);
+    doc.text('Please include invoice number with payment', 50, 625);
 
     // Footer
     doc.fontSize(8).fillColor('gray');
