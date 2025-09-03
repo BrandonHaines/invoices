@@ -122,10 +122,6 @@ export class InvoiceGenerator {
     doc.text('Rue du Trone 100, 3rd floor', 50, 550);
     doc.text('Brussels, 1050', 50, 565);
     doc.text('Belgium', 50, 580);
-    
-    // Invoice number reminder
-    doc.fontSize(10);
-    doc.text(`Please include invoice number ${data.invoiceNumber} with payment`, 50, 610);
 
     // Footer
     doc.fontSize(8).fillColor('gray');

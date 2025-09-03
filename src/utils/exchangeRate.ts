@@ -65,8 +65,8 @@ export class ExchangeRateService {
       );
 
       if (response.data && response.data.conversion_rate) {
-        // Add 0.6% fee in favor (multiply by 1.006 to increase EUR amount by 0.6%)
-        return response.data.conversion_rate * 1.006;
+        // Add 0.1% fee in favor (multiply by 1.001 to increase EUR amount by 0.1%)
+        return response.data.conversion_rate * 1.001;
       }
 
       throw new Error('Invalid API response');
@@ -79,9 +79,14 @@ export class ExchangeRateService {
   async getRate(): Promise<{ rate: number; cached: boolean; date: string }> {
     const today = new Date().toISOString().split('T')[0];
 
-    // Check if we have today's rate cached
-    if (this.cache && this.cache.date === today) {
-      console.log('Using cached exchange rate from today');
+    // In production, always fetch fresh rate for monthly invoices
+    // In development, use cache if available from today
+    const shouldUseTodayCache = process.env.NODE_ENV !== 'production' && 
+                                this.cache && 
+                                this.cache.date === today;
+
+    if (shouldUseTodayCache) {
+      console.log('Using cached exchange rate from today (dev mode)');
       return {
         rate: this.cache.rate,
         cached: true,
